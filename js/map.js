@@ -27,7 +27,7 @@ function get_listing_geojson() {
   request.onload = function () {
     var data = JSON.parse(this.responseText);
     data.forEach(callback);
-    L.geoJson(jsonFeatures, {
+    geojson = L.geoJson(jsonFeatures, {
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, geojsonMarkerOptions);
       },
@@ -52,7 +52,16 @@ function get_neighbourhoods_geojson() {
       {
         onEachFeature: onEachFeature
       }).addTo(map);
-  };
+
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+      this._div.innerHTML = '<h4>Location</h4>' +  (props ?
+          '<b>' + props.neighbourhood + '</b><br />' + props.neighbourhood_group
+          : 'Hover over a state');
+    };
+
+    info.addTo(map);
+    };
   request.send();
 }
 
@@ -127,11 +136,10 @@ $(function(){
     for (var layer of layers) {
       if (layer.feature.properties.neighbourhood_group === data) {
         // Zoom to that layer.
-        map.fitBounds(layer.getBounds());
+        map.fitBounds(layer.getBounds(), {maxZoom: 13});
         break;
       }
     }
-
     get_neighborhood(data);
   });
 });
@@ -158,25 +166,26 @@ $(function(){
 });
 
 function highlightFeature(e) {
-  var layer = e.target;
-
-  layer.setStyle({
-      weight: 5,
-      color: '#666',
-      dashArray: '',
-      fillOpacity: 0.7
-  });
-
-  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-      layer.bringToFront();
-  }
+  layer = e.target;
+  info.update(layer.feature.properties);
 }
 
 function resetHighlight(e) {
-  geojson.addTo(map).resetStyle(e.target);
+  info.update();
 }
 
 function zoomToFeature(e) {
+  var borough = e.target.feature.properties.neighbourhood_group;
+  $('#select-borough').val(borough);
+  var request = new XMLHttpRequest();
+  request.open("GET", "http://127.0.0.1:5000/get_neighborhood/", true);
+  request.onload = function () {
+    var neis = JSON.parse(this.responseText);
+    selectNeighborhood(neis[borough]);
+    $('#select-neighborhood').val(e.target.feature.properties.neighbourhood);
+  };
+  request.send();
+
   map.fitBounds(e.target.getBounds());
 }
 
@@ -210,6 +219,7 @@ function style(feature) {
   };
 }
 
+
 get_neighbourhoods_geojson();
 get_borough();
 
@@ -223,5 +233,13 @@ var geojson = L.tileLayer(
 
   }
 ).addTo(map);
+
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
 
 
