@@ -15,7 +15,7 @@
   right: 0;
   top: 60px;
   height: 135px;
-  padding: 30px;
+  padding: 20px;
   z-index: 50;
   background: #ffffff;
   width: 20%;
@@ -27,7 +27,7 @@
   top: 195px;
   bottom: 0;
   right: 0;
-  padding: 0 30px 30px;
+  padding: 0 20px 20px;
   overflow: auto;
   height: auto;
   display: block;
@@ -40,17 +40,28 @@
   position: absolute;
   height: 35%;
   display: block;
-  width: 50%;
+  width: 100%;
   color: black;
   font-size: 12px;
-  background-color: red;
 }
-
-#narrativePanelHeader p.city {
+a {
+  font-size: 13px;
+}
+h1 {
+  text-align: center;
   top: 20px;
   font-family: "Lato", sans-serif;
   font-weight: 900;
   font-size: 21px;
+  color: #0f325a;
+}
+
+h2 {
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  padding-top: 10px;
+  font-weight: 500;
+  font-size: 18px;
   color: #0f325a;
 }
 
@@ -69,11 +80,10 @@
 }
 
 #chartTitle {
-  top: 5%;
   position: absolute;
   background-color: red;
 }
 #barChart {
   position: absolute;
-  top: 20%;
+  top: 5%;
 }

@@ -43,12 +43,7 @@ function get_neighbourhoods_geojson() {
 
   request.onload = function () {
     var data = JSON.parse(this.responseText);
-    var nei_style = {
-      fillColor: "white",
-      weight: 1,
-      color: "black",
-      fillOpacity: 0.2,
-    };
+    var nei_style = defaultStyle;
     geojson = L.geoJson(data, {
       style: nei_style,
       onEachFeature: onEachFeature,
@@ -63,7 +58,7 @@ function get_neighbourhoods_geojson() {
             props.neighbourhood +
             "</b><br />" +
             props.neighbourhood_group
-          : "Hover over a state");
+          : "Hover over a neighborhood");
     };
 
     info.addTo(map);
@@ -172,11 +167,13 @@ $(function () {
 
 function highlightFeature(e) {
   layer = e.target;
+  layer.setStyle(highlightStyle);
   info.update(layer.feature.properties);
   get_graph(layer.feature.properties.neighbourhood);
 }
 
 function resetHighlight(e) {
+  layer.setStyle(defaultStyle);
   info.update();
 }
 
@@ -234,9 +231,9 @@ function style(feature) {
 
 function get_graph(neighborhood) {
   // set the dimensions and margins of the graph
-  var margin = { top: 20, right: 30, bottom: 70, left: 60 },
-    width = 260 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+  var margin = { top: 30, right: 30, bottom: 100, left: 30 },
+    width = 380 - margin.left - margin.right,
+    height = 360 - margin.top - margin.bottom;
   //console.log(width);
 
   var request = new XMLHttpRequest();
@@ -299,6 +296,7 @@ function get_graph(neighborhood) {
       .enter()
       .append("rect")
       .attr("class", "bar")
+      .attr("fill", "red")
       .attr("x", function (d) {
         return xScale(d.key);
       })
@@ -327,9 +325,25 @@ var geojson = L.tileLayer(
 ).addTo(map);
 
 var info = L.control();
+var highlightStyle = {
+  color: "black",
+  weight: 3,
+  opacity: 0.6,
+  fillOpacity: 0.7,
+  fillColor: "yellow",
+};
+
+var defaultStyle = {
+  fillColor: "white",
+  weight: 1,
+  color: "black",
+  fillOpacity: 0.2,
+};
 
 info.onAdd = function (map) {
   this._div = L.DomUtil.create("div", "info"); // create a div with a class "info"
   this.update();
   return this._div;
 };
+
+info.setPosition("topleft");
