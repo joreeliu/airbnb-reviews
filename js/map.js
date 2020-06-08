@@ -231,7 +231,7 @@ function style(feature) {
 
 function get_graph(neighborhood) {
   // set the dimensions and margins of the graph
-  var margin = { top: 30, right: 30, bottom: 100, left: 30 },
+  var margin = { top: 30, right: 30, bottom: 200, left: 40 },
     width = 380 - margin.left - margin.right,
     height = 360 - margin.top - margin.bottom;
   //console.log(width);
@@ -271,16 +271,18 @@ function get_graph(neighborhood) {
         return d.key;
       })
     );
-    yScale.domain([
-      0,
-      d3.max(data, function (d) {
-        return d.val;
-      }),
-    ]);
+    yScale.domain([0, 1]);
 
     g.append("g")
+      .style("font", "13px times")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(xScale));
+      .call(d3.axisBottom(xScale))
+      .selectAll("text")
+      .attr("y", 0)
+      .attr("x", 9)
+      .attr("dy", ".35em")
+      .attr("transform", "rotate(90)")
+      .style("text-anchor", "start");
 
     g.append("g").call(
       d3
@@ -288,7 +290,8 @@ function get_graph(neighborhood) {
         .tickFormat(function (d) {
           return d;
         })
-        .ticks(10)
+        .ticks(5)
+        .tickFormat(formatPercent)
     );
 
     g.selectAll(".bar")
@@ -339,7 +342,7 @@ var defaultStyle = {
   color: "black",
   fillOpacity: 0.2,
 };
-
+var formatPercent = d3.format(".0%");
 info.onAdd = function (map) {
   this._div = L.DomUtil.create("div", "info"); // create a div with a class "info"
   this.update();
