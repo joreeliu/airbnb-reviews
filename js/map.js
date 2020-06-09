@@ -55,9 +55,9 @@ function get_neighbourhoods_geojson() {
         "<h4>Location</h4>" +
         (props
           ? "<b>" +
-            props.neighbourhood +
-            "</b><br />" +
-            props.neighbourhood_group
+          props.neighbourhood +
+          "</b><br />" +
+          props.neighbourhood_group
           : "Hover over a neighborhood");
     };
 
@@ -204,18 +204,18 @@ function getColor(d) {
   return d > 1000
     ? "#800026"
     : d > 500
-    ? "#BD0026"
-    : d > 200
-    ? "#E31A1C"
-    : d > 100
-    ? "#FC4E2A"
-    : d > 50
-    ? "#FD8D3C"
-    : d > 20
-    ? "#FEB24C"
-    : d > 10
-    ? "#FED976"
-    : "#FFEDA0";
+      ? "#BD0026"
+      : d > 200
+        ? "#E31A1C"
+        : d > 100
+          ? "#FC4E2A"
+          : d > 50
+            ? "#FD8D3C"
+            : d > 20
+              ? "#FEB24C"
+              : d > 10
+                ? "#FED976"
+                : "#FFEDA0";
 }
 
 function style(feature) {
@@ -252,6 +252,14 @@ function get_graph(neighborhood) {
       margin = 200,
       width = svg.attr("width") - margin,
       height = svg.attr("height") - margin; */
+
+      var y = d3.scaleBand()
+      .range([height, 0])
+      .padding(0.1);
+
+var x = d3.scaleLinear()
+      .range([0, width]);
+      
     d3.select("#barChart").selectAll("*").remove();
     var svg = d3
       .select("#barChart")
@@ -262,54 +270,26 @@ function get_graph(neighborhood) {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var xScale = d3.scaleBand().range([0, width]).padding(0.4),
-      yScale = d3.scaleLinear().range([height, 0]);
-    var g = svg.append("g");
+      x.domain([0, d3.max(data, function(d){ return d.val; })])
+      y.domain(data.map(function(d) { return d.key; }));
 
-    xScale.domain(
-      data.map(function (d) {
-        return d.key;
-      })
-    );
-    yScale.domain([0, 1]);
-
-    g.append("g")
-
-      .style("font", "13px times")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(xScale))
-      .selectAll("text")
-      .attr("y", 0)
-      .attr("x", 9)
-      .attr("dy", ".35em")
-      .attr("transform", "translate(-10,10)rotate(-75)")
-      .style("text-anchor", "end");
-
-    /*     g.append("g").call(
-      d3
-        .axisLeft(yScale)
-        .tickFormat(function (d) {
-          return d;
-        })
-        .ticks(5)
-        .tickFormat(formatPercent)
-    ); */
-
-    g.selectAll(".bar")
+      svg.selectAll(".bar")
       .data(data)
-      .enter()
-      .append("rect")
+    .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function (d) {
-        return xScale(d.key);
-      })
-      .attr("y", function (d) {
-        return yScale(d.val);
-      })
-      .attr("width", xScale.bandwidth())
-      .attr("height", function (d) {
-        return height - yScale(d.val);
-      });
+      //.attr("x", function(d) { return x(d.sales); })
+      .attr("width", function(d) {return x(d.val); } )
+      .attr("y", function(d) { return y(d.key); })
+      .attr("height", y.bandwidth());
+
+  // add the x Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
   };
   request.send();
 }
