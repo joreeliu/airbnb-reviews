@@ -14,7 +14,7 @@
   position: absolute;
   right: 0;
   top: 60px;
-  height: 135px;
+  height: 115px;
   padding: 20px;
   z-index: 50;
   background: #ff5a5f;
@@ -25,7 +25,7 @@
 .narrativePanelContent {
   opacity: 0.8;
   position: absolute;
-  top: 195px;
+  top: 175px;
   bottom: 0;
   right: 0;
   border: 20px solid;
@@ -42,6 +42,7 @@
 
 #neighborhood_filter {
   position: absolute;
+  padding-top: 5px;
   height: 35%;
   display: block;
   width: 100%;
@@ -164,5 +165,11 @@ button:hover {
 }
 
 .bg-light {
-  background-color: #00a699 !important;
+  background-color: rgb(224, 222, 222) !important;
+}
+.navbar-brand {
+  top: 20px;
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-size: 21px;
 }
