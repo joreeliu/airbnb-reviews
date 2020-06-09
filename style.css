@@ -92,8 +92,8 @@ h2 {
   stroke: black;
 }
 .bar:hover {
-  fill: rgb(44, 44, 43);
-  stroke: rgb(44, 44, 43);
+  fill: yellow;
+  stroke: yellow;
   stroke-width: 4px;
 }
 #intro {

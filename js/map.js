@@ -248,18 +248,20 @@ function get_graph(neighborhood) {
     var data = JSON.parse(this.responseText);
     console.log(data);
 
+    data.sort(function(a, b) { return a.val - b.val; });
+
     /*     var svg = d3.select("svg"),
       margin = 200,
       width = svg.attr("width") - margin,
       height = svg.attr("height") - margin; */
 
-      var y = d3.scaleBand()
+    var y = d3.scaleBand()
       .range([height, 0])
       .padding(0.1);
 
-var x = d3.scaleLinear()
+    var x = d3.scaleLinear()
       .range([0, width]);
-      
+
     d3.select("#barChart").selectAll("*").remove();
     var svg = d3
       .select("#barChart")
@@ -270,25 +272,25 @@ var x = d3.scaleLinear()
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      x.domain([0, d3.max(data, function(d){ return d.val; })])
-      y.domain(data.map(function(d) { return d.key; }));
+    x.domain([0, 1])
+    y.domain(data.map(function (d) { return d.key; }));
 
-      svg.selectAll(".bar")
+    svg.selectAll(".bar")
       .data(data)
-    .enter().append("rect")
+      .enter().append("rect")
       .attr("class", "bar")
       //.attr("x", function(d) { return x(d.sales); })
-      .attr("width", function(d) {return x(d.val); } )
-      .attr("y", function(d) { return y(d.key); })
-      .attr("height", y.bandwidth());
+      .attr("width", function (d) { return x(d.val); })
+      .attr("y", function (d) { return y(d.key); })
+      .attr("height", y.bandwidth())
 
-  // add the x Axis
-  svg.append("g")
+    // add the x Axis
+    svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x).tickFormat(d3.format(".0%")));
 
-  // add the y Axis
-  svg.append("g")
+    // add the y Axis
+    svg.append("g")
       .call(d3.axisLeft(y));
   };
   request.send();
