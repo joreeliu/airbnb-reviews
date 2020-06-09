@@ -87,3 +87,38 @@ h2 {
   position: absolute;
   top: 5%;
 }
+.bar {
+  fill: black;
+  stroke: black;
+}
+.bar:hover {
+  fill: rgb(44, 44, 43);
+  stroke: rgb(44, 44, 43);
+  stroke-width: 4px;
+}
+#intro {
+  position: absolute;
+  background-color: white;
+  opacity: 0.8;
+  width: 15%;
+  height: 25%;
+  bottom: 10px;
+  left: 10px;
+}
+.streetview {
+  background-size: contain;
+  opacity: 1 !important;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  height: 50%;
+}
+a {
+  text-align: left;
+  font-family: "Lato", sans-serif;
+  padding-top: 10px;
+  padding-left: 10px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #0f325a;
+}

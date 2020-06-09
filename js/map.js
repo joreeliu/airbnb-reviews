@@ -231,7 +231,7 @@ function style(feature) {
 
 function get_graph(neighborhood) {
   // set the dimensions and margins of the graph
-  var margin = { top: 30, right: 30, bottom: 200, left: 40 },
+  var margin = { top: 30, right: 35, bottom: 200, left: 35 },
     width = 380 - margin.left - margin.right,
     height = 360 - margin.top - margin.bottom;
   //console.log(width);
@@ -274,6 +274,7 @@ function get_graph(neighborhood) {
     yScale.domain([0, 1]);
 
     g.append("g")
+
       .style("font", "13px times")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(xScale))
@@ -281,10 +282,10 @@ function get_graph(neighborhood) {
       .attr("y", 0)
       .attr("x", 9)
       .attr("dy", ".35em")
-      .attr("transform", "rotate(90)")
-      .style("text-anchor", "start");
+      .attr("transform", "translate(-10,10)rotate(-75)")
+      .style("text-anchor", "end");
 
-    g.append("g").call(
+    /*     g.append("g").call(
       d3
         .axisLeft(yScale)
         .tickFormat(function (d) {
@@ -292,14 +293,13 @@ function get_graph(neighborhood) {
         })
         .ticks(5)
         .tickFormat(formatPercent)
-    );
+    ); */
 
     g.selectAll(".bar")
       .data(data)
       .enter()
       .append("rect")
       .attr("class", "bar")
-      .attr("fill", "red")
       .attr("x", function (d) {
         return xScale(d.key);
       })
@@ -338,7 +338,7 @@ var highlightStyle = {
 
 var defaultStyle = {
   fillColor: "white",
-  weight: 1,
+  weight: 3,
   color: "black",
   fillOpacity: 0.2,
 };
