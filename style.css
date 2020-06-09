@@ -96,10 +96,10 @@ h3 {
   position: absolute;
 }
 #barChart {
-  position: relative;
+  position: absolute;
   top: 10%;
   width: 90%;
-  height: 20%;
+  height: 30%;
   margin: 0 auto;
   padding: 10px;
   border-style: solid;
@@ -154,10 +154,11 @@ button {
   background-color: #00a699;
   font-family: "Lato", sans-serif;
   border-radius: 10px;
-  position: relative;
+  position: absolute;
   margin: 0 auto;
   padding: 10px;
   left: 35%;
+  bottom: 10px;
 }
 
 button:hover {
@@ -172,4 +173,30 @@ button:hover {
   font-family: "Lato", sans-serif;
   font-weight: 900;
   font-size: 21px;
+}
+
+#key-words {
+  position: absolute;
+  top: 50%;
+  width: 90%;
+  height: 10%;
+  margin: 0 auto;
+  padding: 10px;
+  border-style: solid;
+  /* border: black; */
+  border-width: 2px;
+  background-color: rgb(224, 222, 222);
+}
+
+#related-neighborhoods {
+  position: absolute;
+  top: 70%;
+  width: 90%;
+  height: 10%;
+  margin: 0 auto;
+  padding: 10px;
+  border-style: solid;
+  /* border: black; */
+  border-width: 2px;
+  background-color: rgb(224, 222, 222);
 }

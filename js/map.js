@@ -1,10 +1,11 @@
 // read in listings
-function get_listing_geojson() {
+function get_listing_by_neighborhood(neighborhood) {
   var jsonFeatures = new Array();
   var request = new XMLHttpRequest();
+  console.log(neighborhood);
   request.open(
     "GET",
-    "http://127.0.0.1:5000/get_listings_by_description/safe",
+    "http://127.0.0.1:5000/get_listings_by_neighborhood/" + neighborhood,
     true
   );
   function callback(listing) {
@@ -21,7 +22,7 @@ function get_listing_geojson() {
     };
 
     jsonFeatures.push(feature);
-    //console.log("features")
+    console.log("features");
   }
 
   request.onload = function () {
@@ -29,9 +30,11 @@ function get_listing_geojson() {
     data.forEach(callback);
     geojson = L.geoJson(jsonFeatures, {
       pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, geojsonMarkerOptions);
+        return L.marker(latlng, {
+          icon: icons[Math.floor(Math.random() * icons.length)],
+        });
       },
-    }).addTo(map);
+    }).addTo(layerGroup);
   };
   request.send();
   return jsonFeatures;
@@ -67,9 +70,9 @@ function get_neighbourhoods_geojson() {
 }
 
 var geojsonMarkerOptions = {
-  radius: 5,
-  fillColor: "#ff7800",
-  color: "#000",
+  radius: 3,
+  fillColor: "#FC642D",
+  color: "black",
   weight: 1,
   opacity: 1,
   fillOpacity: 0.8,
@@ -178,7 +181,9 @@ function resetHighlight(e) {
 }
 
 function zoomToFeature(e) {
+  layerGroup.clearLayers();
   var borough = e.target.feature.properties.neighbourhood_group;
+  var nei = e.target.feature.properties.neighbourhood;
   $("#select-borough").val(borough);
   var request = new XMLHttpRequest();
   request.open("GET", "http://127.0.0.1:5000/get_neighborhood/", true);
@@ -186,6 +191,7 @@ function zoomToFeature(e) {
     var neis = JSON.parse(this.responseText);
     selectNeighborhood(neis[borough]);
     $("#select-neighborhood").val(e.target.feature.properties.neighbourhood);
+    get_listing_by_neighborhood(nei);
   };
   request.send();
 
@@ -338,6 +344,7 @@ get_borough();
 //get_graph("Midtown");
 
 var map = L.map("map", { center: [40.742413, -73.980182], zoom: 12 });
+var layerGroup = L.layerGroup().addTo(map);
 var geojson = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   {
@@ -354,6 +361,23 @@ var highlightStyle = {
   fillOpacity: 0.7,
   fillColor: "#00A699",
 };
+
+var LeafIcon = L.Icon.extend({
+  options: {
+    //shadowUrl: "leaf-shadow.png",
+    iconSize: [20, 18],
+    //shadowSize: [50, 64],
+    iconAnchor: [11, 20],
+    //shadowAnchor: [4, 62],
+    popupAnchor: [-3, -76],
+  },
+});
+
+var icon1 = new LeafIcon({ iconUrl: "1.png" });
+var icon2 = new LeafIcon({ iconUrl: "2.png" });
+var icon3 = new LeafIcon({ iconUrl: "3.png" });
+var icon4 = new LeafIcon({ iconUrl: "4.png" });
+var icons = [icon1, icon2, icon3, icon4];
 
 var defaultStyle = {
   fillColor: "white",
