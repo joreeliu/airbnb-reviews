@@ -17,8 +17,9 @@
   height: 135px;
   padding: 20px;
   z-index: 50;
-  background: #ffffff;
+  background: #ff5a5f;
   width: 20%;
+  color: #ffffff;
 }
 
 .narrativePanelContent {
@@ -27,13 +28,16 @@
   top: 195px;
   bottom: 0;
   right: 0;
-  padding: 0 20px 20px;
+  border: 20px solid;
+  border-color: #ff5a5f;
+  /* padding: 20px; */
   overflow: auto;
   height: auto;
   display: block;
   z-index: 47;
   background: #f5f5f5;
   width: 20%;
+  background-clip: padding-box;
 }
 
 #neighborhood_filter {
@@ -46,6 +50,7 @@
 }
 a {
   font-size: 13px;
+  color: #ffffff;
 }
 h1 {
   text-align: center;
@@ -53,18 +58,25 @@ h1 {
   font-family: "Lato", sans-serif;
   font-weight: 900;
   font-size: 21px;
-  color: #0f325a;
+  color: #ffffff;
 }
 
 h2 {
   text-align: left;
   font-family: "Lato", sans-serif;
-  padding-top: 10px;
+  padding: 10px;
   font-weight: 500;
   font-size: 18px;
   color: #0f325a;
 }
-
+h3 {
+  text-align: center;
+  top: 20px;
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-size: 21px;
+  color: #ff5a5f;
+}
 .info {
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
@@ -81,23 +93,31 @@ h2 {
 
 #chartTitle {
   position: absolute;
-  background-color: red;
 }
 #barChart {
-  position: absolute;
-  top: 5%;
+  position: relative;
+  top: 10%;
+  width: 90%;
+  height: 20%;
+  margin: 0 auto;
+  padding: 10px;
+  border-style: solid;
+  /* border: black; */
+  border-width: 2px;
+  background-color: rgb(224, 222, 222);
 }
 .bar {
-  fill: black;
-  stroke: black;
+  fill: #00a699;
+  stroke: #00a699;
 }
 .bar:hover {
-  fill: yellow;
-  stroke: yellow;
+  fill: #ff5a5f;
+  stroke: #ff5a5f;
   stroke-width: 4px;
 }
 #intro {
   position: absolute;
+  color: black;
   background-color: white;
   opacity: 0.8;
   width: 15%;
@@ -120,5 +140,29 @@ a {
   padding-left: 10px;
   font-weight: 500;
   font-size: 15px;
-  color: #0f325a;
+  color: #ffffff;
+}
+
+.tick line {
+  visibility: hidden;
+}
+
+button {
+  color: #ffffff;
+  font-size: small;
+  background-color: #00a699;
+  font-family: "Lato", sans-serif;
+  border-radius: 10px;
+  position: relative;
+  margin: 0 auto;
+  padding: 10px;
+  left: 35%;
+}
+
+button:hover {
+  background-color: #ff5a5f;
+}
+
+.bg-light {
+  background-color: #00a699 !important;
 }

@@ -55,9 +55,9 @@ function get_neighbourhoods_geojson() {
         "<h4>Location</h4>" +
         (props
           ? "<b>" +
-          props.neighbourhood +
-          "</b><br />" +
-          props.neighbourhood_group
+            props.neighbourhood +
+            "</b><br />" +
+            props.neighbourhood_group
           : "Hover over a neighborhood");
     };
 
@@ -204,18 +204,18 @@ function getColor(d) {
   return d > 1000
     ? "#800026"
     : d > 500
-      ? "#BD0026"
-      : d > 200
-        ? "#E31A1C"
-        : d > 100
-          ? "#FC4E2A"
-          : d > 50
-            ? "#FD8D3C"
-            : d > 20
-              ? "#FEB24C"
-              : d > 10
-                ? "#FED976"
-                : "#FFEDA0";
+    ? "#BD0026"
+    : d > 200
+    ? "#E31A1C"
+    : d > 100
+    ? "#FC4E2A"
+    : d > 50
+    ? "#FD8D3C"
+    : d > 20
+    ? "#FEB24C"
+    : d > 10
+    ? "#FED976"
+    : "#FFEDA0";
 }
 
 function style(feature) {
@@ -231,9 +231,9 @@ function style(feature) {
 
 function get_graph(neighborhood) {
   // set the dimensions and margins of the graph
-  var margin = { top: 30, right: 35, bottom: 200, left: 35 },
-    width = 380 - margin.left - margin.right,
-    height = 360 - margin.top - margin.bottom;
+  var margin = { top: 10, right: 35, bottom: 20, left: 35 },
+    width = 280 - margin.left - margin.right,
+    height = 200 - margin.top - margin.bottom;
   //console.log(width);
 
   var request = new XMLHttpRequest();
@@ -248,19 +248,18 @@ function get_graph(neighborhood) {
     var data = JSON.parse(this.responseText);
     console.log(data);
 
-    data.sort(function(a, b) { return a.val - b.val; });
+    data.sort(function (a, b) {
+      return a.val - b.val;
+    });
 
     /*     var svg = d3.select("svg"),
       margin = 200,
       width = svg.attr("width") - margin,
       height = svg.attr("height") - margin; */
 
-    var y = d3.scaleBand()
-      .range([height, 0])
-      .padding(0.1);
+    var y = d3.scaleBand().range([height, 0]).padding(0.1);
 
-    var x = d3.scaleLinear()
-      .range([0, width]);
+    var x = d3.scaleLinear().range([0, width]);
 
     d3.select("#barChart").selectAll("*").remove();
     var svg = d3
@@ -270,28 +269,66 @@ function get_graph(neighborhood) {
       .attr("height", height + margin.top + margin.bottom)
       .style("stroke", "rgb(80,80,0)")
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr(
+        "transform",
+        "translate(" + margin.left * 1.5 + "," + margin.top + ")"
+      );
 
-    x.domain([0, 1])
-    y.domain(data.map(function (d) { return d.key; }));
+    x.domain([0, 1]);
+    y.domain(
+      data.map(function (d) {
+        return d.key;
+      })
+    );
 
-    svg.selectAll(".bar")
+    svg
+      .selectAll(".bar")
       .data(data)
-      .enter().append("rect")
+      .enter()
+      .append("rect")
       .attr("class", "bar")
+
       //.attr("x", function(d) { return x(d.sales); })
-      .attr("width", function (d) { return x(d.val); })
-      .attr("y", function (d) { return y(d.key); })
-      .attr("height", y.bandwidth())
+      .attr("width", function (d) {
+        return x(d.val);
+      })
+      .attr("y", function (d) {
+        return y(d.key);
+      })
+      .attr("height", 20);
+
+    var yAxis = d3.axisLeft().tickSize(0).scale(y);
+
+    var gy = svg
+      .append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .call((g) => g.select(".domain").remove());
 
     // add the x Axis
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).tickFormat(d3.format(".0%")));
+    svg
+      .selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      .text(function (d) {
+        return d.val;
+      })
+      //x position is 3 pixels to the right of the bar
+      .attr("x", function (d) {
+        return x(d.val) + 3;
+      });
 
     // add the y Axis
-    svg.append("g")
-      .call(d3.axisLeft(y));
+
+    //no tick marks
+    //.tickSize(0)
+    //.orient("left");
+
+    //var gy = svg.append("g").attr("class", "y axis").call(yAxis);
+
+    // var bars = svg.selectAll(".bar").data(data).enter().append("g");
+    //svg.append("g").call(d3.axisLeft(y));
   };
   request.send();
 }
@@ -315,7 +352,7 @@ var highlightStyle = {
   weight: 3,
   opacity: 0.6,
   fillOpacity: 0.7,
-  fillColor: "yellow",
+  fillColor: "#00A699",
 };
 
 var defaultStyle = {
