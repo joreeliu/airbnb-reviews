@@ -239,7 +239,7 @@ function get_graph(neighborhood) {
   // set the dimensions and margins of the graph
   var margin = { top: 10, right: 35, bottom: 20, left: 35 },
     width = 280 - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
+    height = 180 - margin.top - margin.bottom;
   //console.log(width);
 
   var request = new XMLHttpRequest();

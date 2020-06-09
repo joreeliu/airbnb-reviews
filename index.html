@@ -37,22 +37,26 @@
     <!--Navbar Image and text -->
     <div class="navbar navbar-light bg-light">
       <a class="navbar-brand" href="#">
-        <img
-          src="logo.png"
-          width="80"
-          height="40"
-          alt=""
-          loading="lazy"
-        />
+        <img src="logo.png" width="80" height="40" alt="" loading="lazy" />
         Airbnb Reviews and Street Quality
       </a>
     </div>
     <div id="map"></div>
     <div id="intro">
-      <h3 >DUMBO</h3>
-      <div class="streetview" style="background-image: url('https://images.nycgo.com/image/fetch/q_65,c_fill,f_auto,w_1920/https://www.nycgo.com/images/neighborhoods/71290/dumbo-brooklyn-nyc-julienne-schaer-nyc-and-company-207.jpg'); background-position: bottom center"></div>
-      <a >Galleries, shops and bridge photo ops</a>
-      <button onclick="window.location.herf='https://www.nycgo.com/boroughs-neighborhoods/brooklyn/dumbo3'"> More Info</button>
+      <h3>DUMBO</h3>
+      <div
+        class="streetview"
+        style="
+          background-image: url('https://images.nycgo.com/image/fetch/q_65,c_fill,f_auto,w_1920/https://www.nycgo.com/images/neighborhoods/71290/dumbo-brooklyn-nyc-julienne-schaer-nyc-and-company-207.jpg');
+          background-position: bottom center;
+        "
+      ></div>
+      <a>Galleries, shops and bridge photo ops</a>
+      <button
+        onclick="window.location.herf='https://www.nycgo.com/boroughs-neighborhoods/brooklyn/dumbo3'"
+      >
+        More Info
+      </button>
     </div>
     <div class="narrativePanelHeader">
       <h1>New York City</h1>
@@ -67,11 +71,38 @@
       </div>
     </div>
     <div class="narrativePanelContent">
-      <h2>Airbnb hosts describe the neighborhood as a place ...<h2>
-      <div id="barChart"></div>
-      <div id="key-words"></div>
-      <div id="related-neighborhoods"></div>
-      <button id="remove-point" onclick="layerGroup.clearLayers()">Clean Map</button>
+      <div class="score">
+        <a style="color: black; font-size: 15px; padding: 10px; top: 10px;"
+          >Average Score of this neighborhood:</a
+        >
+        <a
+          style="
+            color: #ff5a5f;
+            font-family: fantasy;
+            font-size: xx-large;
+            top: 10px;
+          "
+        >
+          89 !</a
+        >
+      </div>
+      <div class="narrativePanelContainer">
+        <h2>Airbnb hosts describe this neighborhood as a place ...</h2>
+        <div id="barChart"></div>
+      </div>
+
+      <div class="narrativePanelContainer">
+        <h2>Most frequently mentioned key words are ...</h2>
+        <div id="key-words"></div>
+      </div>
+
+      <div class="narrativePanelContainer">
+        <h2>Neighborhoods belong to this type are ...</h2>
+        <div id="related-neighborhoods"></div>
+      </div>
+      <button id="remove-point" onclick="layerGroup.clearLayers()">
+        Clean Map
+      </button>
     </div>
 
     <!-- Optional JavaScript -->
@@ -81,7 +112,7 @@
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>
-    
+
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"

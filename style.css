@@ -67,7 +67,7 @@ h2 {
   font-family: "Lato", sans-serif;
   padding: 10px;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 15px;
   color: #0f325a;
 }
 h3 {
@@ -96,10 +96,9 @@ h3 {
   position: absolute;
 }
 #barChart {
-  position: absolute;
-  top: 10%;
+  position: relative;
   width: 90%;
-  height: 30%;
+  height: max-content;
   margin: 0 auto;
   padding: 10px;
   border-style: solid;
@@ -119,8 +118,13 @@ h3 {
 #intro {
   position: absolute;
   color: black;
-  background-color: white;
-  opacity: 0.8;
+  padding: 10px;
+  border-style: solid;
+  border-radius: 10px;
+  /* border: black; */
+  border-width: 2px;
+  background-color: rgb(224, 222, 222);
+  opacity: 0.9;
   width: 15%;
   height: 25%;
   bottom: 10px;
@@ -176,10 +180,9 @@ button:hover {
 }
 
 #key-words {
-  position: absolute;
-  top: 50%;
+  position: relative;
   width: 90%;
-  height: 10%;
+  height: max-content;
   margin: 0 auto;
   padding: 10px;
   border-style: solid;
@@ -189,14 +192,19 @@ button:hover {
 }
 
 #related-neighborhoods {
-  position: absolute;
-  top: 70%;
+  position: relative;
   width: 90%;
-  height: 10%;
+  height: max-content;
   margin: 0 auto;
   padding: 10px;
   border-style: solid;
   /* border: black; */
   border-width: 2px;
   background-color: rgb(224, 222, 222);
+}
+
+.narrativePanelContainer {
+  position: relative;
+  height: max-content;
+  padding-top: 15px;
 }
