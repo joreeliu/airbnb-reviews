@@ -176,6 +176,7 @@ $(function () {
       }
     }
     get_graph(data);
+    update_neighborhood_chars(data);
   });
 });
 
@@ -208,6 +209,7 @@ function zoomToFeature(e) {
 
   map.fitBounds(e.target.getBounds());
   get_graph(layer.feature.properties.neighbourhood);
+  update_neighborhood_chars(layer.feature.properties.neighbourhood);
 }
 
 function onEachFeature(feature, layer) {
@@ -308,6 +310,7 @@ function get_graph(neighborhood) {
         console.log('click', d.key);
         add_chips(d.key);
         add_neighborhood_chips(d.key);
+        update_group_chars(d.key);
         
       })
       .attr("class", "bar")
@@ -400,6 +403,15 @@ function add_chips(group) {
     };
     request.send();
   }
+
+function update_neighborhood_chars(neighbourhood) {
+  $('#narra1 h2').text('Airbnb hosts describe ' + neighbourhood + ' as a place ...');
+}
+
+function update_group_chars(group) {
+  $('#narra2 h2').text('Most frequently mentioned key words for ' + group + ' are ...');
+  $('#narra3 h2').text('Neighborhoods belong to ' + group + ' are ...');
+}
 
 get_neighbourhoods_geojson();
 get_borough();
