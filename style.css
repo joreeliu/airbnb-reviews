@@ -65,7 +65,9 @@ h1 {
 h2 {
   text-align: left;
   font-family: "Lato", sans-serif;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 0%;
   font-weight: 500;
   font-size: 15px;
   color: #0f325a;
@@ -211,10 +213,14 @@ button:hover {
 
 .chip {
   color: white;
-  font-size: 10px;
+  font-size: 12px;
   font-family: "Lato", sans-serif;
-  padding: 5px;
+  padding: 3px;
   margin: 5px;
   display: inline-block;
   background-color: #ff5a5f;
+}
+.axis {
+  font: 13px "Lato", sans-serif;
+  color: #0f325a;
 }

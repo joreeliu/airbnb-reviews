@@ -58,9 +58,9 @@ function get_neighbourhoods_geojson() {
         "<h4>Location</h4>" +
         (props
           ? "<b>" +
-          props.neighbourhood +
-          "</b><br />" +
-          props.neighbourhood_group
+            props.neighbourhood +
+            "</b><br />" +
+            props.neighbourhood_group
           : "Hover over a neighborhood");
     };
 
@@ -130,7 +130,6 @@ function get_neighborhood(borough) {
 $(function () {
   $("#select-borough").trigger("change");
   $("#select-borough").change(function () {
-
     var data = $(this).val();
 
     if (data == "Select Borough") {
@@ -142,10 +141,9 @@ $(function () {
     layers = geojson.getLayers();
 
     for (var layer of layers) {
-
       if (layer.feature.properties.neighbourhood_group === data) {
         // Zoom to that layer.
-        console.log('zoomed!')
+        console.log("zoomed!");
         map.fitBounds(layer.getBounds(), { maxZoom: 13 });
         break;
       }
@@ -157,7 +155,6 @@ $(function () {
 $(function () {
   $("#select-neighborhood").trigger("change");
   $("#select-neighborhood").change(function () {
-
     var data = $(this).val();
 
     if (data == "Select Neighborhood") {
@@ -225,18 +222,18 @@ function getColor(d) {
   return d > 1000
     ? "#800026"
     : d > 500
-      ? "#BD0026"
-      : d > 200
-        ? "#E31A1C"
-        : d > 100
-          ? "#FC4E2A"
-          : d > 50
-            ? "#FD8D3C"
-            : d > 20
-              ? "#FEB24C"
-              : d > 10
-                ? "#FED976"
-                : "#FFEDA0";
+    ? "#BD0026"
+    : d > 200
+    ? "#E31A1C"
+    : d > 100
+    ? "#FC4E2A"
+    : d > 50
+    ? "#FD8D3C"
+    : d > 20
+    ? "#FEB24C"
+    : d > 10
+    ? "#FED976"
+    : "#FFEDA0";
 }
 
 function style(feature) {
@@ -287,12 +284,12 @@ function get_graph(neighborhood) {
       .select("#barChart")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+      .attr("height", height + margin.top)
       .style("stroke", "rgb(80,80,0)")
       .append("g")
       .attr(
         "transform",
-        "translate(" + margin.left * 1.5 + "," + margin.top + ")"
+        "translate(" + margin.left * 2.5 + "," + margin.top + ")"
       );
 
     x.domain([0, 1]);
@@ -307,12 +304,11 @@ function get_graph(neighborhood) {
       .data(data)
       .enter()
       .append("rect")
-      .on('click', function (d, i) {
-        console.log('click', d.key);
+      .on("click", function (d, i) {
+        console.log("click", d.key);
         add_chips(d.key);
         add_neighborhood_chips(d.key);
         update_group_chars(d.key);
-
       })
       .attr("class", "bar")
 
@@ -323,7 +319,7 @@ function get_graph(neighborhood) {
       .attr("y", function (d) {
         return y(d.key);
       })
-      .attr("height", 20);
+      .attr("height", 15);
 
     var yAxis = d3.axisLeft().tickSize(0).scale(y);
 
@@ -362,7 +358,6 @@ function get_graph(neighborhood) {
 }
 
 function add_chips(group) {
-
   var request = new XMLHttpRequest();
   request.open("GET", "http://127.0.0.1:5000/get_keywords/" + group, true);
 
@@ -375,18 +370,19 @@ function add_chips(group) {
     data.forEach(addfunction);
 
     function addfunction(value) {
-      d3
-        .select("#key-words")
-        .append("div").attr("class", "chip").text(value);
+      d3.select("#key-words").append("div").attr("class", "chip").text(value);
     }
   };
   request.send();
 }
 
 function add_neighborhood_chips(group) {
-
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_top_clusters_groups/" + group, true);
+  request.open(
+    "GET",
+    "http://127.0.0.1:5000/get_top_clusters_groups/" + group,
+    true
+  );
 
   request.onload = function () {
     var data = JSON.parse(this.responseText);
@@ -397,27 +393,39 @@ function add_neighborhood_chips(group) {
     data.forEach(addfunction);
 
     function addfunction(value) {
-      d3
-        .select("#related-neighborhoods")
-        .append("div").attr("class", "chip").text(value);
+      d3.select("#related-neighborhoods")
+        .append("div")
+        .attr("class", "chip")
+        .text(value);
     }
   };
   request.send();
 }
-
 function update_neighborhood_chars(neighbourhood) {
-  $('#narra1 h2').text('Airbnb hosts describe ' + neighbourhood + ' as a place ...');
+  $("#narra1 p").text(neighbourhood);
 }
 
 function update_group_chars(group) {
-  $('#narra2 h2').text('Most frequently mentioned key words for ' + group + ' are ...');
-  $('#narra3 h2').text('Neighborhoods belong to ' + group + ' are ...');
+  $("#narra2 p").text(group);
+  $("#narra3 p").text(group);
 }
 
 function update_intro(neighbourhood, img, des, link) {
-  d3.select('#intro').selectAll("*").remove();
-  d3.select('#intro').append('h3').text(neighbourhood)
-    .append('div').attr('class', 'streetview').attr('style', "background-image: url('" + img + "');background-position: bottom center;").append('a').text(des).append('button').attr('onclick', "window.location.herf='" + link).text("More Info")
+  d3.select("#intro").selectAll("*").remove();
+  d3.select("#intro")
+    .append("h3")
+    .text(neighbourhood)
+    .append("div")
+    .attr("class", "streetview")
+    .attr(
+      "style",
+      "background-image: url('" + img + "');background-position: bottom center;"
+    )
+    .append("a")
+    .text(des)
+    .append("button")
+    .attr("onclick", "window.location.herf='" + link)
+    .text("More Info");
 }
 
 get_neighbourhoods_geojson();
