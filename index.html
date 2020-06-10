@@ -1,98 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css" />
-  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-    crossorigin=""></script>
-  <script src="http://d3js.org/d3.v4.js"></script>
-  <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
-  <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <title>Airbnb Reviews and Street Quality</title>
-</head>
-
-<body>
-  <!--Navbar Image and text -->
-  <div class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-      <img src="logo.png" width="80" height="40" alt="" loading="lazy" />
-      Airbnb Reviews and Street Quality
-    </a>
-  </div>
-  <div id="map"></div>
-  <div id="intro">
-    <h3>DUMBO</h3>
-    <div class="streetview" style="
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css"
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""
+    ></script>
+    <script src="http://d3js.org/d3.v4.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+    <script
+      type="text/JavaScript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"
+    ></script>
+    <title>Airbnb Reviews and Street Quality</title>
+  </head>
+  <body>
+    <!--Navbar Image and text -->
+    <div class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="logo.png" width="80" height="40" alt="" loading="lazy" />
+        Airbnb Reviews and Street Quality
+      </a>
+    </div>
+    <div id="map"></div>
+    <div id="intro">
+      <h3>DUMBO</h3>
+      <div
+        class="streetview"
+        style="
           background-image: url('https://images.nycgo.com/image/fetch/q_65,c_fill,f_auto,w_1920/https://www.nycgo.com/images/neighborhoods/71290/dumbo-brooklyn-nyc-julienne-schaer-nyc-and-company-207.jpg');
           background-position: bottom center;
-        "></div>
-    <a>Galleries, shops and bridge photo ops</a>
-    <button onclick="window.location.herf='https://www.nycgo.com/boroughs-neighborhoods/brooklyn/dumbo3'">
-      More Info
-    </button>
-  </div>
-  <div class="narrativePanelHeader">
-    <h1>New York City</h1>
-    <a>Filter By</a>
-    <div id="neighborhood_filter">
-      <select id="select-borough">
-        <option>Select Borough</option>
-      </select>
-      <select id="select-neighborhood">
-        <option>Select Neighborhood</option>
-      </select>
+        "
+      ></div>
+      <a>Galleries, shops and bridge photo ops</a>
+      <button
+        onclick="window.location.herf='https://www.nycgo.com/boroughs-neighborhoods/brooklyn/dumbo3'"
+      >
+        More Info
+      </button>
     </div>
-  </div>
-  <div class="narrativePanelContent">
-    <div class="score">
-      <a style="color: black; font-size: 15px; padding: 10px; top: 10px;">Average Score of this neighborhood:</a>
-      <a style="
+    <div class="narrativePanelHeader">
+      <h1>New York City</h1>
+      <a>Filter By</a>
+      <div id="neighborhood_filter">
+        <select id="select-borough">
+          <option>Select Borough</option>
+        </select>
+        <select id="select-neighborhood">
+          <option>Select Neighborhood</option>
+        </select>
+      </div>
+    </div>
+    <div class="narrativePanelContent">
+      <div class="score">
+        <a style="color: black; font-size: 15px; padding: 10px; top: 10px;"
+          >Average Score of this neighborhood:</a
+        >
+        <a
+          style="
             color: #ff5a5f;
             font-family: fantasy;
             font-size: xx-large;
             top: 10px;
-          ">
-        89 !</a>
-    </div>
-    <div class="narrativePanelContainer">
-      <h2>Airbnb hosts describe this neighborhood as a place ...</h2>
-      <div id="barChart"></div>
-    </div>
-
-    <div class="narrativePanelContainer">
-      <h2>Most frequently mentioned key words are ...</h2>
-      <div id="key-words">
+          "
+        >
+          89 !</a
+        >
       </div>
+      <div class="narrativePanelContainer">
+        <h2>Airbnb hosts describe this neighborhood as a place ...</h2>
+        <div id="barChart"></div>
+      </div>
+
+      <div class="narrativePanelContainer">
+        <h2>Most frequently mentioned key words are ...</h2>
+        <div id="key-words"></div>
+      </div>
+
+      <div class="narrativePanelContainer">
+        <h2>Neighborhoods belong to this type are ...</h2>
+        <div id="related-neighborhoods"></div>
+      </div>
+      <button id="remove-point" onclick="layerGroup.clearLayers()">
+        Clean Map
+      </button>
     </div>
 
-    <div class="narrativePanelContainer">
-      <h2>Neighborhoods belong to this type are ...</h2>
-      <div id="related-neighborhoods"></div>
-    </div>
-    <button id="remove-point" onclick="layerGroup.clearLayers()">
-      Clean Map
-    </button>
-  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"></script>
-  <script src="js/map.js"></script>
-</body>
-
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/map.js"></script>
+  </body>
 </html>

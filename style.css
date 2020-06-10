@@ -209,7 +209,12 @@ button:hover {
   padding-top: 15px;
 }
 
-.chip{
-  font-size: 10px;
+.chip {
+  color: white;
+  font-size: 15px;
+  font-family: "Lato", sans-serif;
+  padding: 5px;
+  margin: 5px;
   display: inline-block;
+  background-color: #ff5a5f;
 }
