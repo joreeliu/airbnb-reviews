@@ -422,7 +422,7 @@ function update_intro(neighbourhood) {
   );
   request.onload = function () {
     var res = JSON.parse(this.responseText);
-    
+
     d3.select("#intro").selectAll("*").remove();
     d3.select("#intro").append("h3").text(neighbourhood);
     d3.select("#intro")

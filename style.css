@@ -161,11 +161,11 @@ button {
   background-color: #00a699;
   font-family: "Lato", sans-serif;
   border-radius: 10px;
-  position: absolute;
+  position: relative;
   margin: 0 auto;
   padding: 10px;
   left: 35%;
-  bottom: 10px;
+  bottom: 2%;
 }
 
 button:hover {
@@ -224,4 +224,8 @@ button:hover {
 .axis {
   font: 13px "Lato", sans-serif;
   color: #0f325a;
+}
+
+#scoreplace {
+  padding: 10px;
 }
