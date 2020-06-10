@@ -174,6 +174,8 @@ $(function () {
     }
     get_graph(data);
     update_neighborhood_chars(data);
+    update_intro(data);
+    upodate_score(data);
   });
 });
 
@@ -410,22 +412,40 @@ function update_group_chars(group) {
   $("#narra3 p").text(group);
 }
 
-function update_intro(neighbourhood, img, des, link) {
-  d3.select("#intro").selectAll("*").remove();
-  d3.select("#intro")
-    .append("h3")
-    .text(neighbourhood)
-    .append("div")
-    .attr("class", "streetview")
-    .attr(
-      "style",
-      "background-image: url('" + img + "');background-position: bottom center;"
-    )
-    .append("a")
-    .text(des)
-    .append("button")
-    .attr("onclick", "window.location.herf='" + link)
-    .text("More Info");
+function update_intro(neighbourhood) {
+  var request = new XMLHttpRequest();
+  request.open("GET", "http://127.0.0.1:5000/get_neighbor_intro/" + neighbourhood, true);
+  request.onload = function () {
+    var res = JSON.parse(this.responseText);
+    d3.select("#intro").selectAll("*").remove();
+    d3.select("#intro")
+      .append("h3")
+      .text(neighbourhood)
+      .append("div")
+      .attr("class", "streetview")
+      .attr(
+        "style",
+        "background-image: url('" + res.img + "');background-position: bottom center;"
+      )
+      .append("a")
+      .text(res.neighborhood_description)
+      .append("button")
+      .attr("onclick", "window.location.herf='" + res.neighborhood_url)
+      .text("More Info");
+  };
+  request.send();
+}
+
+function upodate_score(neighbourhood){
+  var request = new XMLHttpRequest();
+  request.open("GET", "http://127.0.0.1:5000/get_neighborhood_score/" + neighbourhood, true);
+  request.onload = function () {
+    var res = JSON.parse(this.responseText);
+    d3.select('#scoreplace').selectAll('*').remove();
+    d3.select('#scoreplace').text('Average Airbnb Review Score for ' +  neighbourhood + ':')
+    .append('a').attr('style', 'color: #ff5a5f; font-family: fantasy; font-size: xx-large; top: 10px;').text(Math.round(res.score, 0))
+  };
+  request.send();
 }
 
 get_neighbourhoods_geojson();
