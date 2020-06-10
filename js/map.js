@@ -293,8 +293,9 @@ function get_graph(neighborhood) {
       .enter()
       .append("rect")
       .on('click', function(d, i) {
-        console.log('mouseover', d.key);
+        console.log('click', d.key);
         add_chips(d.key);
+        add_neighborhood_chips(d.key);
         
       })
       .attr("class", "bar")
@@ -360,6 +361,28 @@ function add_chips(group) {
       function addfunction(value){
         d3
         .select("#key-words")
+        .append("div").attr("class", "chip").text(value);
+      }
+    };
+    request.send();
+  }
+
+  function add_neighborhood_chips(group) {
+
+    var request = new XMLHttpRequest();
+    request.open("GET", "http://127.0.0.1:5000/get_top_clusters_groups/" + group, true);
+  
+    request.onload = function () {
+      var data = JSON.parse(this.responseText);
+      console.log(data);
+      
+      d3.select("#related-neighborhoods").selectAll("*").remove();
+
+      data.forEach(addfunction);
+
+      function addfunction(value){
+        d3
+        .select("#related-neighborhoods")
         .append("div").attr("class", "chip").text(value);
       }
     };
