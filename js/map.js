@@ -28,7 +28,7 @@ function get_listing_by_neighborhood(neighborhood) {
   request.onload = function () {
     var data = JSON.parse(this.responseText);
     data.forEach(callback);
-    geojson = L.geoJson(jsonFeatures, {
+    L.geoJson(jsonFeatures, {
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
           icon: icons[Math.floor(Math.random() * icons.length)],
@@ -81,6 +81,11 @@ var geojsonMarkerOptions = {
 function selectNeighborhood(neighborhoods) {
   var select = document.getElementById("select-neighborhood"),
     neis = neighborhoods;
+
+  while(select.firstChild){
+    select.removeChild(select.firstChild);
+  }
+
   for (var i = 0; i < neis.length; i++) {
     var option = document.createElement("OPTION"),
       txt = document.createTextNode(neis[i]);
@@ -125,6 +130,7 @@ function get_neighborhood(borough) {
 $(function () {
   $("#select-borough").trigger("change");
   $("#select-borough").change(function () {
+    
     var data = $(this).val();
 
     if (data == "Select Borough") {
@@ -136,8 +142,10 @@ $(function () {
     layers = geojson.getLayers();
 
     for (var layer of layers) {
+     
       if (layer.feature.properties.neighbourhood_group === data) {
         // Zoom to that layer.
+        console.log('zoomed!')
         map.fitBounds(layer.getBounds(), { maxZoom: 13 });
         break;
       }
@@ -149,6 +157,7 @@ $(function () {
 $(function () {
   $("#select-neighborhood").trigger("change");
   $("#select-neighborhood").change(function () {
+    
     var data = $(this).val();
 
     if (data == "Select Neighborhood") {
@@ -157,6 +166,8 @@ $(function () {
 
     console.log(data);
 
+    layers = geojson.getLayers();
+
     for (var layer of layers) {
       if (layer.feature.properties.neighbourhood === data) {
         // Zoom to that layer.
@@ -164,7 +175,7 @@ $(function () {
         break;
       }
     }
-    //get_graph(layer.feature.properties.neighbourhood);
+    get_graph(data);
   });
 });
 
@@ -172,7 +183,7 @@ function highlightFeature(e) {
   layer = e.target;
   layer.setStyle(highlightStyle);
   info.update(layer.feature.properties);
-  get_graph(layer.feature.properties.neighbourhood);
+  //get_graph(layer.feature.properties.neighbourhood);
 }
 
 function resetHighlight(e) {
@@ -196,6 +207,7 @@ function zoomToFeature(e) {
   request.send();
 
   map.fitBounds(e.target.getBounds());
+  get_graph(layer.feature.properties.neighbourhood);
 }
 
 function onEachFeature(feature, layer) {
