@@ -210,6 +210,7 @@ function zoomToFeature(e) {
   get_graph(layer.feature.properties.neighbourhood);
   update_neighborhood_chars(layer.feature.properties.neighbourhood);
   update_intro(layer.feature.properties.neighbourhood);
+  upodate_score(layer.feature.properties.neighbourhood);
 }
 
 function onEachFeature(feature, layer) {
