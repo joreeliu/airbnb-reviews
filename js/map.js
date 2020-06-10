@@ -422,6 +422,7 @@ function update_intro(neighbourhood) {
   );
   request.onload = function () {
     var res = JSON.parse(this.responseText);
+    
     d3.select("#intro").selectAll("*").remove();
     d3.select("#intro").append("h3").text(neighbourhood);
     d3.select("#intro")
@@ -429,9 +430,9 @@ function update_intro(neighbourhood) {
       .attr("class", "streetview")
       .attr(
         "style",
-        "background-image: url('" +
-          res.img +
-          "');background-position: bottom center; height: 100px"
+        "background-image: url('assets/neighborhood images/" +
+          neighbourhood +
+          ".jpg');background-position: bottom center; height: 100px"
       );
     d3.select("#intro").append("h2").text(res.neighborhood_description);
     d3.select("#intro")
