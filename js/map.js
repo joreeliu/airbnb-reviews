@@ -82,7 +82,7 @@ function selectNeighborhood(neighborhoods) {
   var select = document.getElementById("select-neighborhood"),
     neis = neighborhoods;
 
-  while(select.firstChild){
+  while (select.firstChild) {
     select.removeChild(select.firstChild);
   }
 
@@ -130,7 +130,7 @@ function get_neighborhood(borough) {
 $(function () {
   $("#select-borough").trigger("change");
   $("#select-borough").change(function () {
-    
+
     var data = $(this).val();
 
     if (data == "Select Borough") {
@@ -142,7 +142,7 @@ $(function () {
     layers = geojson.getLayers();
 
     for (var layer of layers) {
-     
+
       if (layer.feature.properties.neighbourhood_group === data) {
         // Zoom to that layer.
         console.log('zoomed!')
@@ -157,7 +157,7 @@ $(function () {
 $(function () {
   $("#select-neighborhood").trigger("change");
   $("#select-neighborhood").change(function () {
-    
+
     var data = $(this).val();
 
     if (data == "Select Neighborhood") {
@@ -210,6 +210,7 @@ function zoomToFeature(e) {
   map.fitBounds(e.target.getBounds());
   get_graph(layer.feature.properties.neighbourhood);
   update_neighborhood_chars(layer.feature.properties.neighbourhood);
+  update_intro(layer.feature.properties.neighbourhood);
 }
 
 function onEachFeature(feature, layer) {
@@ -306,12 +307,12 @@ function get_graph(neighborhood) {
       .data(data)
       .enter()
       .append("rect")
-      .on('click', function(d, i) {
+      .on('click', function (d, i) {
         console.log('click', d.key);
         add_chips(d.key);
         add_neighborhood_chips(d.key);
         update_group_chars(d.key);
-        
+
       })
       .attr("class", "bar")
 
@@ -362,47 +363,47 @@ function get_graph(neighborhood) {
 
 function add_chips(group) {
 
-    var request = new XMLHttpRequest();
-    request.open("GET", "http://127.0.0.1:5000/get_keywords/" + group, true);
-  
-    request.onload = function () {
-      var data = JSON.parse(this.responseText);
-      console.log(data);
-      
-      d3.select("#key-words").selectAll("*").remove();
+  var request = new XMLHttpRequest();
+  request.open("GET", "http://127.0.0.1:5000/get_keywords/" + group, true);
 
-      data.forEach(addfunction);
+  request.onload = function () {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
 
-      function addfunction(value){
-        d3
+    d3.select("#key-words").selectAll("*").remove();
+
+    data.forEach(addfunction);
+
+    function addfunction(value) {
+      d3
         .select("#key-words")
         .append("div").attr("class", "chip").text(value);
-      }
-    };
-    request.send();
-  }
+    }
+  };
+  request.send();
+}
 
-  function add_neighborhood_chips(group) {
+function add_neighborhood_chips(group) {
 
-    var request = new XMLHttpRequest();
-    request.open("GET", "http://127.0.0.1:5000/get_top_clusters_groups/" + group, true);
-  
-    request.onload = function () {
-      var data = JSON.parse(this.responseText);
-      console.log(data);
-      
-      d3.select("#related-neighborhoods").selectAll("*").remove();
+  var request = new XMLHttpRequest();
+  request.open("GET", "http://127.0.0.1:5000/get_top_clusters_groups/" + group, true);
 
-      data.forEach(addfunction);
+  request.onload = function () {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
 
-      function addfunction(value){
-        d3
+    d3.select("#related-neighborhoods").selectAll("*").remove();
+
+    data.forEach(addfunction);
+
+    function addfunction(value) {
+      d3
         .select("#related-neighborhoods")
         .append("div").attr("class", "chip").text(value);
-      }
-    };
-    request.send();
-  }
+    }
+  };
+  request.send();
+}
 
 function update_neighborhood_chars(neighbourhood) {
   $('#narra1 h2').text('Airbnb hosts describe ' + neighbourhood + ' as a place ...');
@@ -411,6 +412,12 @@ function update_neighborhood_chars(neighbourhood) {
 function update_group_chars(group) {
   $('#narra2 h2').text('Most frequently mentioned key words for ' + group + ' are ...');
   $('#narra3 h2').text('Neighborhoods belong to ' + group + ' are ...');
+}
+
+function update_intro(neighbourhood, img, des, link) {
+  d3.select('#intro').selectAll("*").remove();
+  d3.select('#intro').append('h3').text(neighbourhood)
+    .append('div').attr('class', 'streetview').attr('style', "background-image: url('" + img + "');background-position: bottom center;").append('a').text(des).append('button').attr('onclick', "window.location.herf='" + link).text("More Info")
 }
 
 get_neighbourhoods_geojson();
