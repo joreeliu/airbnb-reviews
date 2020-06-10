@@ -135,10 +135,11 @@ h3 {
 .streetview {
   background-size: contain;
   opacity: 1 !important;
+  width: 240px;
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 10px;
-  height: 50%;
+  height: 100;
 }
 a {
   text-align: left;

@@ -415,21 +415,26 @@ function update_group_chars(group) {
 
 function update_intro(neighbourhood) {
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_neighbor_intro/" + neighbourhood, true);
+  request.open(
+    "GET",
+    "http://127.0.0.1:5000/get_neighbor_intro/" + neighbourhood,
+    true
+  );
   request.onload = function () {
     var res = JSON.parse(this.responseText);
     d3.select("#intro").selectAll("*").remove();
+    d3.select("#intro").append("h3").text(neighbourhood);
     d3.select("#intro")
-      .append("h3")
-      .text(neighbourhood)
       .append("div")
       .attr("class", "streetview")
       .attr(
         "style",
-        "background-image: url('" + res.img + "');background-position: bottom center;"
-      )
-      .append("a")
-      .text(res.neighborhood_description)
+        "background-image: url('" +
+          res.img +
+          "');background-position: bottom center; height: 100px"
+      );
+    d3.select("#intro").append("h2").text(res.neighborhood_description);
+    d3.select("#intro")
       .append("button")
       .attr("onclick", "window.location.herf='" + res.neighborhood_url)
       .text("More Info");
@@ -437,14 +442,24 @@ function update_intro(neighbourhood) {
   request.send();
 }
 
-function upodate_score(neighbourhood){
+function upodate_score(neighbourhood) {
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_neighborhood_score/" + neighbourhood, true);
+  request.open(
+    "GET",
+    "http://127.0.0.1:5000/get_neighborhood_score/" + neighbourhood,
+    true
+  );
   request.onload = function () {
     var res = JSON.parse(this.responseText);
-    d3.select('#scoreplace').selectAll('*').remove();
-    d3.select('#scoreplace').text('Average Airbnb Review Score for ' +  neighbourhood + ':')
-    .append('a').attr('style', 'color: #ff5a5f; font-family: fantasy; font-size: xx-large; top: 10px;').text(Math.round(res.score, 0))
+    d3.select("#scoreplace").selectAll("*").remove();
+    d3.select("#scoreplace")
+      .text("Average Airbnb Review Score for " + neighbourhood + ":")
+      .append("a")
+      .attr(
+        "style",
+        "color: #ff5a5f; font-family: fantasy; font-size: xx-large; top: 10px;"
+      )
+      .text(Math.round(res.score, 0));
   };
   request.send();
 }
