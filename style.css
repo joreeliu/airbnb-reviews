@@ -208,3 +208,8 @@ button:hover {
   height: max-content;
   padding-top: 15px;
 }
+
+.chip{
+  font-size: 10px;
+  display: inline-block;
+}

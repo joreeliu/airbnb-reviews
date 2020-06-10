@@ -58,9 +58,9 @@ function get_neighbourhoods_geojson() {
         "<h4>Location</h4>" +
         (props
           ? "<b>" +
-            props.neighbourhood +
-            "</b><br />" +
-            props.neighbourhood_group
+          props.neighbourhood +
+          "</b><br />" +
+          props.neighbourhood_group
           : "Hover over a neighborhood");
     };
 
@@ -210,18 +210,18 @@ function getColor(d) {
   return d > 1000
     ? "#800026"
     : d > 500
-    ? "#BD0026"
-    : d > 200
-    ? "#E31A1C"
-    : d > 100
-    ? "#FC4E2A"
-    : d > 50
-    ? "#FD8D3C"
-    : d > 20
-    ? "#FEB24C"
-    : d > 10
-    ? "#FED976"
-    : "#FFEDA0";
+      ? "#BD0026"
+      : d > 200
+        ? "#E31A1C"
+        : d > 100
+          ? "#FC4E2A"
+          : d > 50
+            ? "#FD8D3C"
+            : d > 20
+              ? "#FEB24C"
+              : d > 10
+                ? "#FED976"
+                : "#FFEDA0";
 }
 
 function style(feature) {
@@ -292,6 +292,11 @@ function get_graph(neighborhood) {
       .data(data)
       .enter()
       .append("rect")
+      .on('click', function(d, i) {
+        console.log('mouseover', d.key);
+        add_chips(d.key);
+        
+      })
       .attr("class", "bar")
 
       //.attr("x", function(d) { return x(d.sales); })
@@ -338,6 +343,28 @@ function get_graph(neighborhood) {
   };
   request.send();
 }
+
+function add_chips(group) {
+
+    var request = new XMLHttpRequest();
+    request.open("GET", "http://127.0.0.1:5000/get_keywords/" + group, true);
+  
+    request.onload = function () {
+      var data = JSON.parse(this.responseText);
+      console.log(data);
+      
+      d3.select("#key-words").selectAll("*").remove();
+
+      data.forEach(addfunction);
+
+      function addfunction(value){
+        d3
+        .select("#key-words")
+        .append("div").attr("class", "chip").text(value);
+      }
+    };
+    request.send();
+  }
 
 get_neighbourhoods_geojson();
 get_borough();
