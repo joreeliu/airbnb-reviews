@@ -1,0 +1,23 @@
+{
+  "name": "airbnb-reviews",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joreeliu/airbnb-reviews.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joreeliu/airbnb-reviews/issues"
+  },
+  "homepage": "https://github.com/joreeliu/airbnb-reviews#readme"
+}
