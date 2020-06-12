@@ -1,4 +1,4 @@
-api_host = "http://airbnb-review.eba-bi6bwcxf.us-east-2.elasticbeanstalk.com"
+api_host = "http://airbnb-review.eba-bi6bwcxf.us-east-2.elasticbeanstalk.com";
 //api_host = "http://127.0.0.1:5000"
 
 // read in listings
@@ -384,11 +384,7 @@ function add_chips(group) {
 
 function add_neighborhood_chips(group) {
   var request = new XMLHttpRequest();
-  request.open(
-    "GET",
-    api_host + "/get_top_clusters_groups/" + group,
-    true
-  );
+  request.open("GET", api_host + "/get_top_clusters_groups/" + group, true);
 
   request.onload = function () {
     var data = JSON.parse(this.responseText);
@@ -418,11 +414,7 @@ function update_group_chars(group) {
 
 function update_intro(neighbourhood) {
   var request = new XMLHttpRequest();
-  request.open(
-    "GET",
-    api_host + "/get_neighbor_intro/" + neighbourhood,
-    true
-  );
+  request.open("GET", api_host + "/get_neighbor_intro/" + neighbourhood, true);
   request.onload = function () {
     var res = JSON.parse(this.responseText);
 
