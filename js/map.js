@@ -1,3 +1,6 @@
+api_host = "http://airbnb-review.eba-bi6bwcxf.us-east-2.elasticbeanstalk.com"
+//api_host = "http://127.0.0.1:5000"
+
 // read in listings
 function get_listing_by_neighborhood(neighborhood) {
   var jsonFeatures = new Array();
@@ -5,7 +8,7 @@ function get_listing_by_neighborhood(neighborhood) {
   console.log(neighborhood);
   request.open(
     "GET",
-    "http://127.0.0.1:5000/get_listings_by_neighborhood/" + neighborhood,
+    api_host + "/get_listings_by_neighborhood/" + neighborhood,
     true
   );
   function callback(listing) {
@@ -42,7 +45,7 @@ function get_listing_by_neighborhood(neighborhood) {
 
 function get_neighbourhoods_geojson() {
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_neighborhood_geo/", true);
+  request.open("GET", api_host + "/get_neighborhood_geo/", true);
 
   request.onload = function () {
     var data = JSON.parse(this.responseText);
@@ -109,7 +112,7 @@ function selectBorough(borough) {
 
 function get_borough() {
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_neighborhood/", true);
+  request.open("GET", api_host + "/get_neighborhood/", true);
   request.onload = function () {
     var neis = JSON.parse(this.responseText);
     selectBorough(Object.keys(neis));
@@ -119,7 +122,7 @@ function get_borough() {
 
 function get_neighborhood(borough) {
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_neighborhood/", true);
+  request.open("GET", api_host + "/get_neighborhood/", true);
   request.onload = function () {
     var neis = JSON.parse(this.responseText);
     selectNeighborhood(neis[borough]);
@@ -197,7 +200,7 @@ function zoomToFeature(e) {
   var nei = e.target.feature.properties.neighbourhood;
   $("#select-borough").val(borough);
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_neighborhood/", true);
+  request.open("GET", api_host + "/get_neighborhood/", true);
   request.onload = function () {
     var neis = JSON.parse(this.responseText);
     selectNeighborhood(neis[borough]);
@@ -260,7 +263,7 @@ function get_graph(neighborhood) {
   var request = new XMLHttpRequest();
   request.open(
     "GET",
-    "http://127.0.0.1:5000/get_neighbor_cluster_count/" + neighborhood,
+    api_host + "/get_neighbor_cluster_count/" + neighborhood,
     true
   );
 
@@ -362,7 +365,7 @@ function get_graph(neighborhood) {
 
 function add_chips(group) {
   var request = new XMLHttpRequest();
-  request.open("GET", "http://127.0.0.1:5000/get_keywords/" + group, true);
+  request.open("GET", api_host + "/get_keywords/" + group, true);
 
   request.onload = function () {
     var data = JSON.parse(this.responseText);
@@ -383,7 +386,7 @@ function add_neighborhood_chips(group) {
   var request = new XMLHttpRequest();
   request.open(
     "GET",
-    "http://127.0.0.1:5000/get_top_clusters_groups/" + group,
+    api_host + "/get_top_clusters_groups/" + group,
     true
   );
 
@@ -417,7 +420,7 @@ function update_intro(neighbourhood) {
   var request = new XMLHttpRequest();
   request.open(
     "GET",
-    "http://127.0.0.1:5000/get_neighbor_intro/" + neighbourhood,
+    api_host + "/get_neighbor_intro/" + neighbourhood,
     true
   );
   request.onload = function () {
@@ -447,7 +450,7 @@ function upodate_score(neighbourhood) {
   var request = new XMLHttpRequest();
   request.open(
     "GET",
-    "http://127.0.0.1:5000/get_neighborhood_score/" + neighbourhood,
+    api_host + "/get_neighborhood_score/" + neighbourhood,
     true
   );
   request.onload = function () {
