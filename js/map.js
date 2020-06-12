@@ -431,7 +431,7 @@ function update_intro(neighbourhood) {
       .attr(
         "style",
         "background-image: url('assets/neighborhood images/" +
-          neighbourhood +
+          neighbourhood.replace(/'/g, "%27") +
           ".jpg');background-position: bottom center; height: 45%"
       );
     d3.select("#intro").append("h2").text(res.neighborhood_description);
