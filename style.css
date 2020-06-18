@@ -159,6 +159,10 @@ h5 {
   visibility: hidden;
 }
 
+.y.axis {
+  text-anchor: start;
+}
+
 button {
   color: #ffffff;
   font-size: small;

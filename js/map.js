@@ -256,8 +256,8 @@ function style(feature) {
 function get_graph(neighborhood) {
   // set the dimensions and margins of the graph
   var margin = { top: 10, right: 35, bottom: 20, left: 35 },
-    width = 280 - margin.left - margin.right,
-    height = 180 - margin.top - margin.bottom;
+    width = 280 - margin.left - margin.right;
+  //height = 180 - margin.top - margin.bottom;
   //console.log(width);
 
   var request = new XMLHttpRequest();
@@ -281,22 +281,20 @@ function get_graph(neighborhood) {
       width = svg.attr("width") - margin,
       height = svg.attr("height") - margin; */
 
-    var y = d3.scaleBand().range([height, 0]).padding(0.1);
+    var y = d3.scaleBand().range([data.length * 30 + margin.top, 0]);
 
     var x = d3.scaleLinear().range([0, width]);
+    var spaceForLabels = 0;
+    var gapBetweenGroups = 5;
 
     d3.select("#barChart").selectAll("*").remove();
     var svg = d3
       .select("#barChart")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top)
+      //.attr("height", height + margin.top)
       .style("stroke", "rgb(80,80,0)")
-      .append("g")
-      .attr(
-        "transform",
-        "translate(" + margin.left * 2.5 + "," + margin.top + ")"
-      );
+      .append("g");
 
     x.domain([0, 1]);
     y.domain(
@@ -325,15 +323,21 @@ function get_graph(neighborhood) {
       .attr("y", function (d) {
         return y(d.key);
       })
-      .attr("height", 15);
+      .attr("height", 15)
+      .attr("transform", function (d, i) {
+        return "translate(" + spaceForLabels + "," + gapBetweenGroups * i + ")";
+      });
 
-    var yAxis = d3.axisLeft().tickSize(0).scale(y);
+    //var yAxis = d3.axisLeft().tickSize(0).scale(y).trasform();
 
-    var gy = svg
+    /*  var gy = svg
       .append("g")
       .attr("class", "y axis")
       .call(yAxis)
-      .call((g) => g.select(".domain").remove());
+      .call((g) => g.select(".domain").remove())
+      .attr("x", function (d) {
+        return x(d.val) + 300;
+      }); */
 
     // add the x Axis
     svg
@@ -342,11 +346,20 @@ function get_graph(neighborhood) {
       .enter()
       .append("text")
       .text(function (d) {
-        return d.val;
+        return d.key;
       })
+      .attr("font-size", "12")
       //x position is 3 pixels to the right of the bar
       .attr("x", function (d) {
         return x(d.val) + 3;
+      })
+      .attr("y", function (d) {
+        return y(d.key) + 10;
+      })
+      .attr("transform", function (d, i) {
+        return (
+          "translate(" + spaceForLabels + "," + gapBetweenGroups * i * 0.8 + ")"
+        );
       });
 
     // add the y Axis
